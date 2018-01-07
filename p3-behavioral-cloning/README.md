@@ -27,6 +27,7 @@ My project includes the following files:
 ### Model Architecture and Training Strategy
 
 As suggested in the course I used NVidia architecture for this project.
+
 ![Model][image2]
 
 My model uses RELU activations, and the data is normalized in the model using a Keras lambda layer (code line 116). 
@@ -40,6 +41,7 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 Training data was chosen to keep the vehicle driving on the road. I used combination of Udacity data and data captured by my own. To create my own data I recorded 2 loops of driving and 5-10 times recording of some possible hard places for the model (bridge and place with no borders).
 
 I used only videos captured from front camera of the vechice, because when I tried to use three images car behavior was not so confident on the track as only with one.
+
 ![Front camera][image1]
 
 For every image I added flipped horisontally image with steering angle * -1 to make model more universal.
