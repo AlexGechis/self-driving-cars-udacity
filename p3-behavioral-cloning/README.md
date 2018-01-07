@@ -17,11 +17,12 @@ The goals / steps of this project are the following:
 ### Files Submitted & Code Quality
 
 My project includes the following files:
-* model.py containing the script to create and train the model
-* drive.py for driving the car in autonomous mode
-* model.h5 containing a trained convolution neural network 
-* readme.md summarizing the results
-* run.mp4 video for one loop of driving car in autonomous mode with the model
+* model.py - containing the script to create and train the model
+* drive.py - for driving the car in autonomous mode
+* model.h5 - containing a trained convolution neural network 
+* readme.md - summarizing the results
+* run.mp4 - video for one loop of driving car in autonomous mode with the model
+* common_functions.py - helper script with image preprocessing
 
 ### Model Architecture and Training Strategy
 
@@ -39,7 +40,7 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 Training data was chosen to keep the vehicle driving on the road. I used combination of Udacity data and data captured by my own. To create my own data I recorded 2 loops of driving and 5-10 times recording of some possible hard places for the model (bridge and place with no borders).
 
 I used only videos captured from front camera of the vechice, because when I tried to use three images car behavior was not so confident on the track as only with one.
-![Front camera][image2]
+![Front camera][image1]
 
 For every image I added flipped horisontally image with steering angle * -1 to make model more universal.
 
@@ -96,7 +97,8 @@ angle 0.61: 7
 angle 0.69: 4
 angle 0.77: 0
 angle 0.84: 0
-angle 0.92: 2```
+angle 0.92: 2
+```
 
 I used 10 epochs for training the model.
 
