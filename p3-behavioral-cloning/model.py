@@ -57,6 +57,18 @@ def load_data(paths):
                     img_paths.append(img_path)
                     angles.append(angle)
 
+                    # adding left and right camera images
+                    # img_path_left = record[0]
+                    # if img_path_left[0] != '/':
+                    #     img_path_left = path + img_path_left
+                    # img_path_right = record[2]
+                    # if img_path_right[0] != '/':
+                    #     img_path_right = path + img_path_right
+                    # img_paths.append(img_path_left)
+                    # angles.append(angle + 0.2)
+                    # img_paths.append(img_path_right)
+                    # angles.append(angle - 0.2)
+
     return (np.array(img_paths), np.array(angles))
 
 # print stats of the dataset

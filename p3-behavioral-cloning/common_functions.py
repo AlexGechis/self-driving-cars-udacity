@@ -1,7 +1,10 @@
+# all preprocessing is moved to an external function to guarantee the same preprocessing in training and driving
 def preprocess_image(img, scheme):
     import cv2
 
-    #crop
+    # crop
+    # I know it could be done in Keras with Cropping2D function, but I want to guarantee same cropping
+    # in both model.py and drive.py (training and driving)
     res = img[50:140,:,:] 
     
     # convert to YUV
