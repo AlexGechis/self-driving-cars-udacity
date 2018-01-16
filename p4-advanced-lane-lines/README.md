@@ -77,7 +77,7 @@ As soon as I have thresholded image with lane lines on it, I can detect them. As
 
 ![jpg](color-fit-lines.jpg)
 
-![png](output_30_0.png)
+![png](./output_images/output_30_0.png)
 
 ### Apply on real images
 I can apply my pipeline to images from camera now
