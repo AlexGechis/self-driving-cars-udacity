@@ -93,7 +93,13 @@ I can apply my pipeline to images from camera now
 ![png](./output_images/output_34_5.png)
 
 ## Calculate radius of curvative
-Now I have A, B and C coefficients of ![png](./img/poly.png) formula. To calculate radius of curvative of abstract function I can use following formula: ![png](./img/radius.png). For my f(y) formula this should be ![png](./img/radius_my.png).
+Now I have A, B and C coefficients of ![png](./img/poly.png) formula. To calculate radius of curvative of abstract function I can use following formula: 
+
+![png](./img/radius.png). 
+
+For my f(y) formula this should be:
+
+![png](./img/radius_my.png).
 
 ## Process video
 
