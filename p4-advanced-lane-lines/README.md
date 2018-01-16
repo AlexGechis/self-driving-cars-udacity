@@ -4,7 +4,7 @@
 
 # Advance lane lines detection project
 
-The goal of this project is to detect lane lines on the image taken from car front camera. For implementation details and more images please check Jupyter notebook or its html version in this repo.
+The goal of this project is to detect lane lines on the image taken from car front camera. For implementation details and more images please check Jupyter notebook or its html version in this repo. Code in html and notebook is located under same parts as here, so you can easily find any code there.
 
 Steps of this project are the following:
 1. Compute the camera calibration matrix and distortion coefficients given a set of chessboard images. Apply a distortion correction to raw images.
@@ -31,9 +31,7 @@ Undistortion of the chess board:
 
 Undistortion of the image taken from front camera:
 
-
 ![png](./output_images/output_12_2.png)
-
 
 ## Bird-eye transformation
 As the next step I want to apply image perspective transformation to make "bird eye" view. In this case lane lines become parallel and it would be easier to calculate shape of lane lines. 
@@ -73,28 +71,53 @@ Now I can combine all thresholded images and apply noize reduction
 ![png](./output_images/output_26_0.png)
 
 ## Lane lines detection
-As soon as I have thresholded image with lane lines on it, I can detect them. As the result I return coefficients `A`, `B` and `C` of the curve function `f(y) = A*y**2 + B*y + C`
+As soon as I have thresholded image with lane lines on it, I can detect them. As the result I return coefficients `A`, `B` and `C` of the curve function ![jpg](.img/poly.png).
 
-![jpg](color-fit-lines.jpg)
+![jpg](.img/color-fit-lines.jpg)
+
+To do it I:
+1. Take histogram and clean center, left and right areas (make them equal 0). I do it because at this project car expected to be in the center of the lane, so I can predict bottom closest to the car position of lane lines as circa 1/6 on the left and 5/6 on the right of the image.
+2. Take a histogram and detect all maximums that are > than some threshold. When I take max value I clean area around with small radius because probably it belongs to same line.
+3. Get all peaks from left and right halмes of the image and find two where distance between them is closer to expected lane width. It helps me to rid out of fake predisctions where surface of the road changes and histogram peak is stronger than lane peak.
+4.  I can use that as a starting point for where to search for the lines. From that point, I use a sliding window, placed around the line centers, to find and follow the lines up to the top of the frame.
+
+Calculated lines on the image and used histogram:
 
 ![png](./output_images/output_30_0.png)
 
-### Apply on real images
+### Apply on the real images
 I can apply my pipeline to images from camera now
 
 ![png](./output_images/output_34_1.png)
 ![png](./output_images/output_34_2.png)
 ![png](./output_images/output_34_5.png)
 
+## Calculate radius of curvative
+Now I have A, B and C coefficients of ![jpg](.img/poly.png) formula. To calculate radius of curvative of abstract function I can use following formula: ![jpg](.img/radius.png). For my f(y) formula this should be ![jpg](.img/poly_my.png)
 
 ## Process video
 
 For vdeo processing I use two tricks:
 
-1. Find lane lines from previous. If lane line was detected, I can reuse this knowledge for the next image to faster search.
-2. Define Lane class that will help to average lane lines on video by keeping last x lines.
+1. Skip sliding windows. If lane line was detected, I can reuse this knowledge for the next image to faster and more robust search.
+2. Define Lane class that will help to average lane lines on video by keeping last x lines. I use weighted average, where I don't change average if new left or right line is very different from previous. This helps me to be more stable in case of detection bugs or small jumps of the car.
+
+![gif](./img/res1.gif)
+![gif](./img/res2.gif)
 
 ## Discussion
 
 My pipeline works good on provided videos, but there is still room for improvements.
-First and main should be sanity checks for found lane lines. So far I do not perform any sanity checks, only on first search some histogram tricks like removing of borders and center and defining peaks with expected lane line with distance. Ideally on each step I should detect of lines are still parallel and size between the lines is same and if not, then fall down into histogram search again.
+
+First and main should be sanity checks for found lane lines. So far I do not perform any sanity checks, only on first search some histogram tricks like removing of borders and center and defining peaks with expected distance. Ideally on each step I should detect if lines are still parallel and size between the lines is same and if not, then fall down into histogram search again.
+
+Second, ideally I should detect all lines on the image and predict which two are most likely lane lines. 
+
+Also, So far I use sliding window search only on the first image and then reuse found lane. It means, if my first line was detected wrongly, all following lines will be wrong as well. For project videos it's not a problem, but I need to perform sanity checks after each line dectection and if it fails, then do search one more time using sliding window.
+
+My pipeline still works not good when only one lane line is visible on strong curves. A soon as goal is to detect radius of curvative, probably it is enought to calculate radius by one line. 
+
+Problems also appears on hilly areas, where my bird-eye transformation gives not parallel lines.
+
+One more thing is the fact that lane lines can have different curvative radius in short period. Probably it makes sence to imrove sliding window functions to detect more complicated f(y) functions.
+
