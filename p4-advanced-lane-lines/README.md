@@ -71,9 +71,9 @@ Now I can combine all thresholded images and apply noize reduction
 ![png](./output_images/output_26_0.png)
 
 ## Lane lines detection
-As soon as I have thresholded image with lane lines on it, I can detect them. As the result I return coefficients `A`, `B` and `C` of the curve function ![jpg](.img/poly.png).
+As soon as I have thresholded image with lane lines on it, I can detect them. As the result I return coefficients `A`, `B` and `C` of the curve function ![png](./img/poly.png).
 
-![jpg](.img/color-fit-lines.jpg)
+![jpg](./img/color-fit-lines.jpg)
 
 To do it I:
 1. Take histogram and clean center, left and right areas (make them equal 0). I do it because at this project car expected to be in the center of the lane, so I can predict bottom closest to the car position of lane lines as circa 1/6 on the left and 5/6 on the right of the image.
@@ -93,7 +93,7 @@ I can apply my pipeline to images from camera now
 ![png](./output_images/output_34_5.png)
 
 ## Calculate radius of curvative
-Now I have A, B and C coefficients of ![jpg](.img/poly.png) formula. To calculate radius of curvative of abstract function I can use following formula: ![jpg](.img/radius.png). For my f(y) formula this should be ![jpg](.img/poly_my.png)
+Now I have A, B and C coefficients of ![png](./img/poly.png) formula. To calculate radius of curvative of abstract function I can use following formula: ![png](./img/radius.png). For my f(y) formula this should be ![png](./img/poly_my.png)
 
 ## Process video
 
